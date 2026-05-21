@@ -20,19 +20,15 @@
 </head>
 <body class="bg-[#050505] relative antialiased">
 
-    <!-- Ambient Grid Background Overlay -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#141414_1px,transparent_1px),linear-gradient(to_bottom,#141414_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none z-0 h-screen"></div>
 
-    <!-- Custom Cursor -->
     <div id="cursor" class="fixed top-0 left-0 w-6 h-6 border-2 border-yellow-500 rounded-full pointer-events-none z-50 hidden md:block -translate-x-1/2 -translate-y-1/2 mix-blend-difference transition-transform duration-75"></div>
 
-    <!-- Navigation Bar -->
     <nav class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-8 py-6 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-sm border-b border-white/5">
         <div class="font-display text-2xl font-black tracking-tighter text-yellow-500">ROCKBASS</div>
         <a href="#store-showcase" class="bg-white text-black px-6 py-2.5 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-yellow-500 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/5">Explore Drivers</a>
     </nav>
 
-    <!-- Hero Section -->
     <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10">
         <div class="absolute bottom-0 left-0 w-full h-48 flex items-end justify-center space-x-1.5 opacity-15 pointer-events-none">
             <div class="wave-bar w-1.5 h-32 bg-yellow-500" style="animation-delay: 0.1s"></div>
@@ -56,7 +52,6 @@
         </div>
     </section>
 
-    <!-- Product Grid Showcase Section -->
     <section id="store-showcase" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
         <div class="mb-20">
             <h2 class="font-display text-4xl md:text-6xl font-black uppercase tracking-tight">Acoustic Arrays</h2>
@@ -64,33 +59,24 @@
         </div>
 
         <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Dynamic product cards load here via JS API request -->
             <div class="animate-pulse bg-zinc-900/50 border border-zinc-800 rounded-3xl h-96"></div>
             <div class="animate-pulse bg-zinc-900/50 border border-zinc-800 rounded-3xl h-96"></div>
             <div class="animate-pulse bg-zinc-900/50 border border-zinc-800 rounded-3xl h-96"></div>
         </div>
     </section>
 
-    <!-- 4-Side Multi-Angle Product Detail View Slider Modal Overlay -->
     <div id="product-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
-        
-        <!-- Modal Base Card Container Box -->
         <div class="w-full h-full md:h-[85vh] md:max-w-6xl md:rounded-3xl border border-zinc-800/80 bg-[#090909] flex flex-col md:flex-row overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300">
             
-            <!-- Close Modal Trigger -->
             <button onclick="closeProductModal()" class="absolute top-6 left-6 z-50 bg-zinc-900/80 hover:bg-yellow-500 hover:text-black border border-zinc-800 text-white rounded-full p-3 transition-all duration-200 shadow-md">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
-            <!-- LEFT CONTAINER: Dynamic Image Swiping Viewport Carousel -->
             <div id="carousel-viewport" class="w-full md:w-[60%] bg-black relative flex items-center justify-center overflow-hidden h-[50vh] md:h-full group">
-                
-                <!-- Track element for swapping images -->
                 <div id="carousel-track" class="w-full h-full relative flex items-center justify-center">
                     <img id="modal-image" src="" alt="Speaker view angle" class="w-full h-full object-cover transition-transform duration-500 ease-out">
                 </div>
 
-                <!-- Navigation Arrow Toggles -->
                 <button onclick="navigateAngle(-1)" class="absolute left-4 bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800/30 text-white rounded-full p-3 hover:scale-110 transition-all opacity-0 group-hover:opacity-100">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
@@ -98,7 +84,6 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                 </button>
 
-                <!-- Step Dot Location Progress Indicators -->
                 <div class="absolute bottom-6 flex space-x-2.5 z-10">
                     <div class="dot-indicator w-2.5 h-2.5 rounded-full bg-yellow-500 transition-all duration-300"></div>
                     <div class="dot-indicator w-2.5 h-2.5 rounded-full bg-zinc-700 transition-all duration-300"></div>
@@ -107,9 +92,7 @@
                 </div>
             </div>
 
-            <!-- RIGHT CONTAINER: Technical Description Specs & Store Checkout Panel -->
             <div class="w-full md:w-[40%] p-8 md:p-12 border-t md:border-t-0 md:border-l border-zinc-800/80 flex flex-col justify-between overflow-y-auto h-[50vh] md:h-full bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
-                
                 <div class="space-y-6">
                     <div>
                         <span id="modal-category" class="text-xs font-bold font-mono tracking-widest text-yellow-500 uppercase">SUBWOOFER</span>
@@ -131,7 +114,6 @@
                     </div>
                 </div>
 
-                <!-- Fixed Buy Component Channels Module Group -->
                 <div class="pt-8 border-t border-zinc-900/80 mt-8 space-y-3.5">
                     <div class="flex justify-between items-baseline mb-2">
                         <span class="text-xs font-mono text-zinc-500 font-bold">RETAIL MATRIX MAP</span>
@@ -149,25 +131,22 @@
                     </button>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- Frontend Core Application Script Engine -->
     <script>
-        const API_BASE = 'http://127.0.0.1:5000/api';
+        // 🚀 FIX 3: Changed relative endpoint location config map
+        const API_BASE = '/api';
         
         let activeProductData = null;
         let currentAngleIndex = 0;
         let touchStartX = 0;
         let touchEndX = 0;
 
-        // Custom Cursor Coordinate Tracker
         window.addEventListener('mousemove', (e) => {
             gsap.to('#cursor', { x: e.clientX, y: e.clientY, duration: 0.1 });
         });
 
-        // Pull speaker configurations from Python server on system load
         async function loadMarketplaceProducts() {
             try {
                 const res = await fetch(`${API_BASE}/products`);
@@ -177,7 +156,7 @@
                 grid.innerHTML = ''; 
 
                 if(data.length === 0) {
-                    grid.innerHTML = `<p class="col-span-3 text-center text-zinc-500">No database hardware entries detected. Run localhost:5000/api/seed to initialize inventory data structure.</p>`;
+                    grid.innerHTML = `<p class="col-span-3 text-center text-zinc-500">No database hardware entries detected. Run /api/seed to initialize inventory data structure.</p>`;
                     return;
                 }
 
@@ -209,7 +188,6 @@
                     `;
                 });
 
-                // GSAP Cards Intro Stagger Reveal Effect
                 gsap.to(".product-card", {
                     y: 0,
                     opacity: 1,
@@ -219,13 +197,11 @@
                 });
 
             } catch (err) {
-                document.getElementById('product-grid').innerHTML = `<p class="col-span-3 text-center text-red-500">API connection drop-out. Verify local python server execution status on port 5000.</p>`;
+                document.getElementById('product-grid').innerHTML = `<p class="col-span-3 text-center text-red-500">API connection drop-out. Verify your deployment build status configuration.</p>`;
             }
         }
 
-        // Open Multi-Angle Modal Showcase Pipeline
         function openProductDetailView(product) {
-            // Read the explicit 4 angle paths straight from our Python backend response dictionary
             activeProductData = {
                 ...product,
                 angles: product.angles 
@@ -233,7 +209,6 @@
             
             currentAngleIndex = 0;
 
-            // Map and bind metadata properties to the text fields
             document.getElementById('modal-title').innerText = activeProductData.name;
             document.getElementById('modal-category').innerText = activeProductData.category;
             document.getElementById('modal-description').innerText = activeProductData.description;
@@ -243,13 +218,11 @@
             document.getElementById('modal-spec-freq').innerText = activeProductData.specs.frequencyResponse;
             document.getElementById('modal-spec-impedance').innerText = activeProductData.specs.impedance;
 
-            // Configure outbound affiliate anchor link click properties
             document.getElementById('modal-amazon-link').onclick = () => dispatchRedirect(activeProductData._id, activeProductData.links.amazon);
             document.getElementById('modal-flipkart-link').onclick = () => dispatchRedirect(activeProductData._id, activeProductData.links.flipkart);
 
             renderActiveAngle();
 
-            // Bring modal on screen smoothly
             const modal = document.getElementById('product-modal');
             modal.classList.remove('hidden');
             setTimeout(() => {
@@ -258,13 +231,11 @@
             }, 10);
         }
 
-        // Horizontal Image Shift Slider Engine
         function renderActiveAngle() {
             if (!activeProductData) return;
             
             const imgElement = document.getElementById('modal-image');
             
-            // GSAP slide transformation animation sequence
             gsap.to(imgElement, {
                 opacity: 0, 
                 x: -30,
@@ -275,7 +246,6 @@
                 }
             });
 
-            // Refresh step indicator tracking dots visual frames
             const dots = document.querySelectorAll('.dot-indicator');
             dots.forEach((dot, index) => {
                 if(index === currentAngleIndex) {
@@ -286,7 +256,6 @@
             });
         }
 
-        // Navigate step values via arrows
         function navigateAngle(direction) {
             currentAngleIndex += direction;
             if (currentAngleIndex > 3) currentAngleIndex = 0;
@@ -294,7 +263,6 @@
             renderActiveAngle();
         }
 
-        // Screen Touch Gestures Capture Logic (Mobile Swiping support)
         const viewport = document.getElementById('carousel-viewport');
         viewport.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
         viewport.addEventListener('touchend', e => {
@@ -305,9 +273,9 @@
         function handleSwipeGesture() {
             const swipeThreshold = 50; 
             if (touchStartX - touchEndX > swipeThreshold) {
-                navigateAngle(1);  // Swipe Left -> Load next local image file
+                navigateAngle(1);  
             } else if (touchEndX - touchStartX > swipeThreshold) {
-                navigateAngle(-1); // Swipe Right -> Load previous image file
+                navigateAngle(-1); 
             }
         }
 
@@ -318,7 +286,6 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        // Forward conversion traffic out to Amazon or Flipkart marketplaces
         async function dispatchRedirect(id, url) {
             try {
                 await fetch(`${API_BASE}/products/${id}/track-click`, { method: 'POST' });
@@ -326,7 +293,6 @@
             window.open(url, '_blank');
         }
 
-        // Launch application initialization lifecycle
         window.addEventListener('DOMContentLoaded', loadMarketplaceProducts);
     </script>
 </body>
