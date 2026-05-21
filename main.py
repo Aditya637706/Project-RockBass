@@ -1,170 +1,299 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-import sqlite3
-import os
-import json # Used to store lists inside SQLite columns cleanly
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-white selection:bg-yellow-500 selection:text-black scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RockBass | Sound Velocity Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@800&display=swap');
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .font-display { font-family: 'Syne', sans-serif; }
+        @keyframes dynamic-wave {
+            0%, 100% { transform: scaleY(0.2); }
+            50% { transform: scaleY(1); }
+        }
+        .wave-bar { animation: dynamic-wave 1s ease-in-out infinite; transform-origin: bottom; }
+    </style>
+</head>
+<body class="bg-[#050505] relative antialiased">
 
-app = FastAPI(title="RockBass Car Audio Multi-Angle Affiliate API")
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#141414_1px,transparent_1px),linear-gradient(to_bottom,#141414_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none z-0 h-screen"></div>
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], 
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    <div id="cursor" class="fixed top-0 left-0 w-6 h-6 border-2 border-yellow-500 rounded-full pointer-events-none z-50 hidden md:block -translate-x-1/2 -translate-y-1/2 mix-blend-difference transition-transform duration-75"></div>
 
-IMAGE_DIR = os.path.join(os.path.dirname(__file__), "images")
-if not os.path.exists(IMAGE_DIR):
-    os.makedirs(IMAGE_DIR)
+    <nav class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-8 py-6 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-sm border-b border-white/5">
+        <div class="font-display text-2xl font-black tracking-tighter text-yellow-500">ROCKBASS</div>
+        <a href="#store-showcase" class="bg-white text-black px-6 py-2.5 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-yellow-500 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/5">Explore Drivers</a>
+    </nav>
 
-app.mount("/static", StaticFiles(directory=IMAGE_DIR), name="static")
+    <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10">
+        <div class="absolute bottom-0 left-0 w-full h-48 flex items-end justify-center space-x-1.5 opacity-15 pointer-events-none">
+            <div class="wave-bar w-1.5 h-32 bg-yellow-500" style="animation-delay: 0.1s"></div>
+            <div class="wave-bar w-1.5 h-44 bg-yellow-500" style="animation-delay: 0.3s"></div>
+            <div class="wave-bar w-1.5 h-24 bg-yellow-500" style="animation-delay: 0.5s"></div>
+            <div class="wave-bar w-1.5 h-48 bg-yellow-500" style="animation-delay: 0.2s"></div>
+            <div class="wave-bar w-1.5 h-36 bg-yellow-500" style="animation-delay: 0.4s"></div>
+        </div>
 
-DB_FILE = "rockbass.db"
+        <div class="max-w-5xl">
+            <span class="text-xs font-semibold tracking-[0.4em] text-yellow-500 uppercase block mb-4">Pure Automotive Acoustic Displacement</span>
+            <h1 class="font-display text-6xl md:text-9xl font-black uppercase leading-none tracking-tighter mb-8">
+                Built For <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-600">Pressure</span>
+            </h1>
+            <p class="text-zinc-400 max-w-xl mx-auto text-sm md:text-base tracking-wide leading-relaxed mb-10">
+                We design architectural transducer components engineered exclusively around cabin pressure environments. Every peak engineered purely for high-fidelity audio accuracy.
+            </p>
+            <a href="#store-showcase" class="inline-flex p-4 rounded-full border border-zinc-800 hover:border-yellow-500 group transition-all duration-300">
+                <svg class="w-5 h-5 text-zinc-500 group-hover:text-yellow-500 transform group-hover:translate-y-1 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </a>
+        </div>
+    </section>
 
-def get_db_connection():
-    conn = sqlite3.connect(DB_FILE)
-    conn.row_factory = sqlite3.Row 
-    return conn
+    <section id="store-showcase" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="mb-20">
+            <h2 class="font-display text-4xl md:text-6xl font-black uppercase tracking-tight">Acoustic Arrays</h2>
+            <div class="h-1 w-20 bg-yellow-500 mt-4"></div>
+        </div>
 
-def init_db():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    # 💥 CHANGED: We now use "imageAnglesJson" to store all 4 local image routes inside a structured list
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS products (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            slug TEXT UNIQUE NOT NULL,
-            category TEXT NOT NULL,
-            price REAL NOT NULL,
-            description TEXT NOT NULL,
-            imageAnglesJson TEXT NOT NULL, 
-            powerOutput TEXT NOT NULL,
-            frequencyResponse TEXT NOT NULL,
-            impedance TEXT NOT NULL,
-            amazonUrl TEXT DEFAULT '',
-            flipkartUrl TEXT DEFAULT '',
-            clickCount INTEGER DEFAULT 0
-        )
-    """)
-    conn.commit()
-    conn.close()
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="animate-pulse bg-zinc-900/50 border border-zinc-800 rounded-3xl h-96"></div>
+            <div class="animate-pulse bg-zinc-900/50 border border-zinc-800 rounded-3xl h-96"></div>
+            <div class="animate-pulse bg-zinc-900/50 border border-zinc-800 rounded-3xl h-96"></div>
+        </div>
+    </section>
 
-init_db()
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="w-full h-full md:h-[85vh] md:max-w-6xl md:rounded-3xl border border-zinc-800/80 bg-[#090909] flex flex-col md:flex-row overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300">
+            
+            <button onclick="closeProductModal()" class="absolute top-6 left-6 z-50 bg-zinc-900/80 hover:bg-yellow-500 hover:text-black border border-zinc-800 text-white rounded-full p-3 transition-all duration-200 shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
 
+            <div id="carousel-viewport" class="w-full md:w-[60%] bg-black relative flex items-center justify-center overflow-hidden h-[50vh] md:h-full group">
+                <div id="carousel-track" class="w-full h-full relative flex items-center justify-center">
+                    <img id="modal-image" src="" alt="Speaker view angle" class="w-full h-full object-cover transition-transform duration-500 ease-out">
+                </div>
 
-# --- API ENDPOINTS ---
+                <button onclick="navigateAngle(-1)" class="absolute left-4 bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800/30 text-white rounded-full p-3 hover:scale-110 transition-all opacity-0 group-hover:opacity-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="navigateAngle(1)" class="absolute right-4 bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800/30 text-white rounded-full p-3 hover:scale-110 transition-all opacity-0 group-hover:opacity-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </button>
 
-@app.get("/api/seed")
-def seed_database():
-    """Populates database rows linking specifically to 4 unique angles for each product asset folder."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("DELETE FROM products")
-    
-    # Pack 4 individual structural photo urls into standard JSON arrays
-    velox_angles = json.dumps([
-        'http://127.0.0.1:5000/static/velox_1.jpg',
-        'http://127.0.0.1:5000/static/velox_2.jpg',
-        'http://127.0.0.1:5000/static/velox_3.jpg',
-        'http://127.0.0.1:5000/static/velox_4.jpg'
-    ])
-    
-    core6_angles = json.dumps([
-        'http://127.0.0.1:5000/static/core6_1.jpg',
-        'http://127.0.0.1:5000/static/core6_2.jpg',
-        'http://127.0.0.1:5000/static/core6_3.jpg',
-        'http://127.0.0.1:5000/static/core6_4.jpg'
-    ])
-    
-    aero_angles = json.dumps([
-        'http://127.0.0.1:5000/static/aero_1.jpg',
-        'http://127.0.0.1:5000/static/aero_2.jpg',
-        'http://127.0.0.1:5000/static/aero_3.jpg',
-        'http://127.0.0.1:5000/static/aero_4.jpg'
-    ])
-    
-    seed_data = [
-        (
-            'VeloX 12" Subwoofer', 'velox-12-subwoofer', 'Subwoofer', 549.00,
-            'Neodymium motor structure throwing pure, clean sub-bass frequencies down to the biological limits of hearing.',
-            velox_angles, '1200W RMS / 2400W Peak', '18Hz - 250Hz', 'Dual 4-Ohm',
-            'https://amazon.com', 'https://www.flipkart.com/rockbass-rb-6400wbt-10-inch-active-basstube-inbuilt-high-power-amplifier-frequency-35hz-20khz-subwoofer/p/itm0a6b52cd564e8?pid=CSFHCK5Y7FHZ2GA5&lid=LSTCSFHCK5Y7FHZ2GA5B0AJO1&marketplace=FLIPKART&store=1mt%2Feoe%2Fkyc&srno=b_1_4&otracker=browse&fm=organic&iid=27da68f1-9489-4000-add9-1b91ba60fb87.CSFHCK5Y7FHZ2GA5.SEARCH&ppt=browse&ppn=browse&ssid=obt8ws2cfk0000001779350203314&ov_redirect=true&ov_redirect=true'
-        ),
-        (
-            'Core-6 Components', 'core-6-components', 'Components', 389.00,
-            'Carbon-fiber woven matrix mid-bass driver cones delivering lightning-fast transient audio response with zero cone breakup.',
-            core6_angles, '150W RMS / 300W Peak', '55Hz - 22kHz', '4-Ohm',
-            'https://amazon.com', 'https://www.flipkart.com/rockbass-rb-6400w-rb-10-inch-120-mm-single-magnet-car-powered-subwoofer-90db-bass-audio-subwoofer/p/itm2040162698841?pid=CSFHCSWCZ8A7Y8GF&lid=LSTCSFHCSWCZ8A7Y8GFBO9EE8&marketplace=FLIPKART&store=1mt%2Feoe%2Fkyc&srno=b_1_8&otracker=browse&fm=organic&iid=27da68f1-9489-4000-add9-1b91ba60fb87.CSFHCSWCZ8A7Y8GF.SEARCH&ppt=browse&ppn=browse&ov_redirect=true&ov_redirect=true'
-        ),
-        (
-            'AeroTweeters', 'aerotweeters', 'Tweeters', 199.00,
-            'Pure aerospace silk dome transducers optimized specifically for acoustic reflections inside modern vehicle glass cabins.',
-            aero_angles, '80W RMS / 160W Peak', '3.5kHz - 30kHz', '6-Ohm',
-            'https://amazon.com', 'https://flipkart.com'
-        )
-    ]
-    
-    cursor.executemany("""
-        INSERT INTO products (
-            name, slug, category, price, description, imageAnglesJson, 
-            powerOutput, frequencyResponse, impedance, amazonUrl, flipkartUrl
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, seed_data)
-    
-    conn.commit()
-    conn.close()
-    return {"message": "Database configured with 4 local custom image angles per speaker successfully!"}
+                <div class="absolute bottom-6 flex space-x-2.5 z-10">
+                    <div class="dot-indicator w-2.5 h-2.5 rounded-full bg-yellow-500 transition-all duration-300"></div>
+                    <div class="dot-indicator w-2.5 h-2.5 rounded-full bg-zinc-700 transition-all duration-300"></div>
+                    <div class="dot-indicator w-2.5 h-2.5 rounded-full bg-zinc-700 transition-all duration-300"></div>
+                    <div class="dot-indicator w-2.5 h-2.5 rounded-full bg-zinc-700 transition-all duration-300"></div>
+                </div>
+            </div>
 
+            <div class="w-full md:w-[40%] p-8 md:p-12 border-t md:border-t-0 md:border-l border-zinc-800/80 flex flex-col justify-between overflow-y-auto h-[50vh] md:h-full bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
+                <div class="space-y-6">
+                    <div>
+                        <span id="modal-category" class="text-xs font-bold font-mono tracking-widest text-yellow-500 uppercase">SUBWOOFER</span>
+                        <h2 id="modal-title" class="font-display text-3xl md:text-4xl font-black uppercase tracking-tight mt-1 text-white">VeloX 12" Driver</h2>
+                    </div>
 
-@app.get("/api/products")
-def get_all_products():
-    conn = get_db_connection()
-    rows = conn.execute("SELECT * FROM products ORDER BY price DESC").fetchall()
-    conn.close()
-    
-    result = []
-    for row in rows:
-        angles_list = json.loads(row["imageAnglesJson"])
-        result.append({
-            "_id": str(row["id"]),
-            "name": row["name"],
-            "slug": row["slug"],
-            "category": row["category"],
-            "price": row["price"],
-            "description": row["description"],
-            "imageUrl": angles_list[0], # The first index serves as the catalog main thumbnail
-            "angles": angles_list,       # Holds all 4 multi-side local links
-            "specs": {
-                "powerOutput": row["powerOutput"],
-                "frequencyResponse": row["frequencyResponse"],
-                "impedance": row["impedance"]
-            },
-            "links": {
-                "amazon": row["amazonUrl"],
-                "flipkart": row["flipkartUrl"]
-            },
-            "clickCount": row["clickCount"]
-        })
-    return result
+                    <div>
+                        <h4 class="text-xs uppercase font-bold tracking-wider text-zinc-500 mb-2 font-mono">// System Architecture Profile</h4>
+                        <p id="modal-description" class="text-sm text-zinc-400 leading-relaxed">Detailed dynamic descriptions write directly to this text node framework.</p>
+                    </div>
 
-@app.post("/api/products/{product_id}/track-click")
-def track_affiliate_click(product_id: int):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id FROM products WHERE id = ?", (product_id,))
-    if not cursor.fetchone():
-        conn.close()
-        raise HTTPException(status_code=404, detail="Product not found")
+                    <div class="space-y-3">
+                        <h4 class="text-xs uppercase font-bold tracking-wider text-zinc-500 font-mono">// Acoustic Metrics Grid</h4>
+                        <div class="grid grid-cols-1 gap-2.5 font-mono text-xs">
+                            <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60 flex justify-between"><span class="text-zinc-500">VELOCITY RATIO:</span> <span id="modal-spec-power" class="text-zinc-300">1200W RMS</span></div>
+                            <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60 flex justify-between"><span class="text-zinc-500">FREQ SPECTRUM:</span> <span id="modal-spec-freq" class="text-zinc-300">18Hz - 250Hz</span></div>
+                            <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-900/60 flex justify-between"><span class="text-zinc-500">LOAD RESISTANCE:</span> <span id="modal-spec-impedance" class="text-zinc-300">Dual 4-Ohm</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-zinc-900/80 mt-8 space-y-3.5">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <span class="text-xs font-mono text-zinc-500 font-bold">RETAIL MATRIX MAP</span>
+                        <span id="modal-price" class="text-2xl font-mono font-black text-yellow-500">$549.00</span>
+                    </div>
+                    
+                    <button id="modal-amazon-link" class="w-full py-4 px-6 bg-zinc-900 border border-zinc-800 hover:border-yellow-500 text-white rounded-xl font-bold uppercase text-xs tracking-widest transition-all duration-300 flex items-center justify-between group">
+                        <span class="group-hover:text-yellow-500 transition-colors">Acquire via Amazon</span>
+                        <svg class="w-4 h-4 text-zinc-500 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </button>
+                    
+                    <button id="modal-flipkart-link" class="w-full py-4 px-6 bg-zinc-900 border border-zinc-800 hover:border-blue-500 text-white rounded-xl font-bold uppercase text-xs tracking-widest transition-all duration-300 flex items-center justify-between group">
+                        <span class="group-hover:text-blue-400 transition-colors">Acquire via Flipkart</span>
+                        <svg class="w-4 h-4 text-zinc-500 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 💥 CHANGED: Changed from local IP to relative cloud path mapping
+        const API_BASE = '/api';
         
-    cursor.execute("UPDATE products SET clickCount = clickCount + 1 WHERE id = ?", (product_id,))
-    conn.commit()
-    conn.close()
-    return {"success": True}
+        let activeProductData = null;
+        let currentAngleIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+        window.addEventListener('mousemove', (e) => {
+            gsap.to('#cursor', { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
+
+        async function loadMarketplaceProducts() {
+            try {
+                const res = await fetch(`${API_BASE}/products`);
+                const data = await res.json();
+                
+                const grid = document.getElementById('product-grid');
+                grid.innerHTML = ''; 
+
+                if(data.length === 0) {
+                    grid.innerHTML = `<p class="col-span-3 text-center text-zinc-500">No database hardware entries detected. Run /api/seed to initialize inventory data structure.</p>`;
+                    return;
+                }
+
+                data.forEach(product => {
+                    grid.innerHTML += `
+                        <div class="product-card bg-[#0d0d0d] border border-zinc-900 rounded-3xl p-6 flex flex-col justify-between opacity-0 transform translate-y-8 group hover:border-zinc-700/50 transition-all duration-500">
+                            <div>
+                                <div class="w-full h-52 bg-zinc-950 rounded-2xl mb-6 overflow-hidden relative">
+                                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+                                    <span class="absolute top-3 right-3 bg-black/70 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest text-zinc-400 border border-white/5">${product.category}</span>
+                                </div>
+                                <h3 class="font-display text-xl uppercase font-bold mb-2 tracking-tight">${product.name}</h3>
+                                <p class="text-xs text-zinc-400 leading-relaxed mb-6">${product.description}</p>
+                                
+                                <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-900 mb-6 text-[11px] space-y-1 text-zinc-400 font-mono">
+                                    <div><span class="text-zinc-600">POWR:</span> ${product.specs.powerOutput}</div>
+                                    <div><span class="text-zinc-600">FREQ:</span> ${product.specs.frequencyResponse}</div>
+                                    <div><span class="text-zinc-600">IMPD:</span> ${product.specs.impedance}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-4 border-t border-zinc-900">
+                                <span class="font-mono font-bold text-lg text-yellow-500">$${product.price}</span>
+                                <button onclick='openProductDetailView(${JSON.stringify(product).replace(/'/g, "&apos;")})' class="bg-zinc-900 border border-zinc-800 text-white font-bold text-xs uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-yellow-500 hover:text-black transition-all">
+                                    View Design
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                gsap.to(".product-card", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: "power4.out"
+                });
+
+            } catch (err) {
+                document.getElementById('product-grid').innerHTML = `<p class="col-span-3 text-center text-red-500">API connection drop-out. Verify your deployment build status configuration.</p>`;
+            }
+        }
+
+        function openProductDetailView(product) {
+            activeProductData = {
+                ...product,
+                angles: product.angles 
+            };
+            
+            currentAngleIndex = 0;
+
+            document.getElementById('modal-title').innerText = activeProductData.name;
+            document.getElementById('modal-category').innerText = activeProductData.category;
+            document.getElementById('modal-description').innerText = activeProductData.description;
+            document.getElementById('modal-price').innerText = `$${activeProductData.price}`;
+            
+            document.getElementById('modal-spec-power').innerText = activeProductData.specs.powerOutput;
+            document.getElementById('modal-spec-freq').innerText = activeProductData.specs.frequencyResponse;
+            document.getElementById('modal-spec-impedance').innerText = activeProductData.specs.impedance;
+
+            document.getElementById('modal-amazon-link').onclick = () => dispatchRedirect(activeProductData._id, activeProductData.links.amazon);
+            document.getElementById('modal-flipkart-link').onclick = () => dispatchRedirect(activeProductData._id, activeProductData.links.flipkart);
+
+            renderActiveAngle();
+
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                modal.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function renderActiveAngle() {
+            if (!activeProductData) return;
+            
+            const imgElement = document.getElementById('modal-image');
+            
+            gsap.to(imgElement, {
+                opacity: 0, 
+                x: -30,
+                duration: 0.2, 
+                onComplete: () => {
+                    imgElement.src = activeProductData.angles[currentAngleIndex];
+                    gsap.fromTo(imgElement, { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power2.out" });
+                }
+            });
+
+            const dots = document.querySelectorAll('.dot-indicator');
+            dots.forEach((dot, index) => {
+                if(index === currentAngleIndex) {
+                    dot.className = "dot-indicator w-6 h-2.5 rounded-full bg-yellow-500 transition-all duration-300";
+                } else {
+                    dot.className = "dot-indicator w-2.5 h-2.5 rounded-full bg-zinc-700 transition-all duration-300";
+                }
+            });
+        }
+
+        function navigateAngle(direction) {
+            currentAngleIndex += direction;
+            if (currentAngleIndex > 3) currentAngleIndex = 0;
+            if (currentAngleIndex < 0) currentAngleIndex = 3;
+            renderActiveAngle();
+        }
+
+        const viewport = document.getElementById('carousel-viewport');
+        viewport.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        viewport.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipeGesture();
+        });
+
+        function handleSwipeGesture() {
+            const swipeThreshold = 50; 
+            if (touchStartX - touchEndX > swipeThreshold) {
+                navigateAngle(1);  
+            } else if (touchEndX - touchStartX > swipeThreshold) {
+                navigateAngle(-1); 
+            }
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('opacity-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        async function dispatchRedirect(id, url) {
+            try {
+                await fetch(`${API_BASE}/products/${id}/track-click`, { method: 'POST' });
+            } catch(e) { console.error('Analytics ping timeout.') }
+            window.open(url, '_blank');
+        }
+
+        window.addEventListener('DOMContentLoaded', loadMarketplaceProducts);
+    </script>
+</body>
+</html>
