@@ -92,13 +92,13 @@ def seed_database():
             'VeloX 12" Subwoofer', 'velox-12-subwoofer', 'Subwoofer', 549.00,
             'Neodymium motor structure throwing pure, clean sub-bass frequencies down to the biological limits of hearing.',
             velox_angles, '1200W RMS / 2400W Peak', '18Hz - 250Hz', 'Dual 4-Ohm',
-            'https://amazon.com', 'https://flipkart.com'
+            'https://amazon.com', 'https://www.flipkart.com/rockbass-rb-5400wbt-8-inch-active-basstube-inbuilt-high-power-amplifier-frequency-35hz-20khz-subwoofer/p/itmf121d9be49641'
         ),
         (
             'Core-6 Components', 'core-6-components', 'Components', 389.00,
             'Carbon-fiber woven matrix mid-bass driver cones delivering lightning-fast transient audio response with zero cone breakup.',
             core6_angles, '150W RMS / 300W Peak', '55Hz - 22kHz', '4-Ohm',
-            'https://amazon.com', 'https://flipkart.com'
+            'https://amazon.com', 'https://www.flipkart.com/rockbass-rb-6400w-rb-10-inch-120-mm-single-magnet-car-powered-subwoofer-90db-bass-audio-subwoofer/p/itm2040162698841?pid=CSFHCSWCZ8A7Y8GF&lid=LSTCSFHCSWCZ8A7Y8GFBO9EE8&marketplace=FLIPKART&store=1mt%2Feoe%2Fkyc&srno=b_1_8&otracker=browse&fm=organic&iid=b3af4364-6c2d-4fab-9f2f-89f699b24d9b.CSFHCSWCZ8A7Y8GF.SEARCH&ppt=browse&ppn=browse&ssid=fsire9rlts0000001779351217519&ov_redirect=true&ov_redirect=true'
         ),
         (
             'AeroTweeters', 'aerotweeters', 'Tweeters', 199.00,
