@@ -92,13 +92,13 @@ def seed_database():
             'VeloX 12" Subwoofer', 'velox-12-subwoofer', 'Subwoofer', 549.00,
             'Neodymium motor structure throwing pure, clean sub-bass frequencies down to the biological limits of hearing.',
             velox_angles, '1200W RMS / 2400W Peak', '18Hz - 250Hz', 'Dual 4-Ohm',
-            'https://amazon.com', 'https://flipkart.com'
+            'https://amazon.com', 'https://www.flipkart.com/rockbass-rb-6400wbt-10-inch-active-basstube-inbuilt-high-power-amplifier-frequency-35hz-20khz-subwoofer/p/itm0a6b52cd564e8?pid=CSFHCK5Y7FHZ2GA5&lid=LSTCSFHCK5Y7FHZ2GA5B0AJO1&marketplace=FLIPKART&store=1mt%2Feoe%2Fkyc&srno=b_1_4&otracker=browse&fm=organic&iid=27da68f1-9489-4000-add9-1b91ba60fb87.CSFHCK5Y7FHZ2GA5.SEARCH&ppt=browse&ppn=browse&ssid=obt8ws2cfk0000001779350203314&ov_redirect=true&ov_redirect=true'
         ),
         (
             'Core-6 Components', 'core-6-components', 'Components', 389.00,
             'Carbon-fiber woven matrix mid-bass driver cones delivering lightning-fast transient audio response with zero cone breakup.',
             core6_angles, '150W RMS / 300W Peak', '55Hz - 22kHz', '4-Ohm',
-            'https://amazon.com', 'https://flipkart.com'
+            'https://amazon.com', 'https://www.flipkart.com/rockbass-rb-6400w-rb-10-inch-120-mm-single-magnet-car-powered-subwoofer-90db-bass-audio-subwoofer/p/itm2040162698841?pid=CSFHCSWCZ8A7Y8GF&lid=LSTCSFHCSWCZ8A7Y8GFBO9EE8&marketplace=FLIPKART&store=1mt%2Feoe%2Fkyc&srno=b_1_8&otracker=browse&fm=organic&iid=27da68f1-9489-4000-add9-1b91ba60fb87.CSFHCSWCZ8A7Y8GF.SEARCH&ppt=browse&ppn=browse&ov_redirect=true&ov_redirect=true'
         ),
         (
             'AeroTweeters', 'aerotweeters', 'Tweeters', 199.00,
